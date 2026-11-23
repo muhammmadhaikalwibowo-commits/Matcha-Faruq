@@ -243,7 +243,7 @@ export const PhoneFrame: React.FC<PhoneFrameProps> = ({ children }) => {
             className="w-full px-3 py-2 rounded-[10px] bg-white dark:bg-[#1F261C] border border-[#DFE6D8] dark:border-[#2E3829] text-[#1F2A1C] dark:text-[#E8EFE3] text-[12px] font-semibold flex items-center justify-center gap-1.5 hover:border-[#4A7C3A] cursor-pointer"
           >
             <ShieldAlert size={15} className="text-[#B3402F] dark:text-[#F29F94]" />
-            Uji akses bukti Raka (NFR-04)
+            Uji akses bukti Haikal (NFR-04)
           </button>
 
           <button

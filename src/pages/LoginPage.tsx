@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Banner } from '../components/Banner';
 import { Button } from '../components/Button';
 import { Field, inputClassName } from '../components/Field';
+import { GoogleLogo, GoogleSignInModal } from '../components/GoogleSignInSheet';
 import { validasiEmail } from '../lib/rules';
 import { useApp } from '../state/AppContext';
 
@@ -11,7 +12,7 @@ export const LoginPage: React.FC = () => {
   const navigate = useNavigate();
   const { login, resetPasswordMock, darkMode, toggleDarkMode } = useApp();
 
-  const [email, setEmail] = useState('dina.ayu@mail.com');
+  const [email, setEmail] = useState('raihan.rifqi@gmail.com');
   const [password, setPassword] = useState('12345678');
   const [showPass, setShowPass] = useState(false);
 
@@ -20,6 +21,7 @@ export const LoginPage: React.FC = () => {
   const [formErr, setFormErr] = useState('');
 
   const [forgotOpen, setForgotOpen] = useState(false);
+  const [googleOpen, setGoogleOpen] = useState(false);
   const [resetEmail, setResetEmail] = useState('');
   const [resetNewPass, setResetNewPass] = useState('');
   const [resetMsg, setResetMsg] = useState<{ ok: boolean; text: string } | null>(null);
@@ -64,8 +66,9 @@ export const LoginPage: React.FC = () => {
   };
 
   return (
-    <div className="flex-1 min-h-0 flex flex-col px-[20px] pt-3 pb-6 overflow-y-auto phone-scroll relative">
-      {/* Top theme button */}
+    <div className="flex-1 min-h-0 flex flex-col relative">
+      <div className="flex-1 min-h-0 flex flex-col px-[20px] pt-3 pb-6 overflow-y-auto phone-scroll">
+        {/* Top theme button */}
       <div className="flex justify-end">
         <button
           type="button"
@@ -101,7 +104,7 @@ export const LoginPage: React.FC = () => {
           <button
             type="button"
             onClick={() => {
-              setEmail('dina.ayu@mail.com');
+              setEmail('raihan.rifqi@gmail.com');
               setPassword('12345678');
               setFormErr('');
             }}
@@ -129,7 +132,7 @@ export const LoginPage: React.FC = () => {
             <input
               id="login-email"
               type="email"
-              placeholder="dina.ayu@mail.com"
+              placeholder="raihan.rifqi@gmail.com"
               value={email}
               onChange={(e) => {
                 setEmail(e.target.value);
@@ -188,9 +191,23 @@ export const LoginPage: React.FC = () => {
 
         <div className="flex-1 min-h-4" />
 
-        <div className="pt-4 space-y-3">
+        <div className="pt-4 space-y-2.5">
           <Button type="submit">Masuk</Button>
-          <p className="text-center text-[13px] text-[#6B7866] dark:text-[#9FB098]">
+
+          <div className="flex items-center gap-3 py-0.5">
+            <span className="h-px flex-1 bg-[#DFE6D8] dark:bg-[#2E3829]" />
+            <span className="text-[11px] font-semibold text-[#6B7866] dark:text-[#9FB098]">
+              atau
+            </span>
+            <span className="h-px flex-1 bg-[#DFE6D8] dark:bg-[#2E3829]" />
+          </div>
+
+          <Button variant="outline" onClick={() => setGoogleOpen(true)}>
+            <GoogleLogo size={18} />
+            Masuk dengan Google
+          </Button>
+
+          <p className="text-center text-[13px] text-[#6B7866] dark:text-[#9FB098] pt-1">
             Belum punya akun?{' '}
             <Link to="/daftar" className="text-[#4A7C3A] dark:text-[#9ED588] font-bold hover:underline">
               Daftar
@@ -198,6 +215,7 @@ export const LoginPage: React.FC = () => {
           </p>
         </div>
       </form>
+      </div>
 
       {/* Pemulihan password sheet */}
       {forgotOpen && (
@@ -244,6 +262,15 @@ export const LoginPage: React.FC = () => {
           </div>
         </div>
       )}
+      <GoogleSignInModal
+        open={googleOpen}
+        mode="login"
+        onClose={() => setGoogleOpen(false)}
+        onSuccess={(user) => {
+          setGoogleOpen(false);
+          navigate(user.peran === 'admin' ? '/admin' : '/');
+        }}
+      />
     </div>
   );
 };

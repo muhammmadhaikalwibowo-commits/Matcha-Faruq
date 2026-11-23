@@ -8,6 +8,7 @@ import {
   Receipt,
   ShoppingCart,
   Truck,
+  User,
 } from 'lucide-react';
 import { NavLink } from 'react-router-dom';
 import { useApp } from '../state/AppContext';
@@ -25,6 +26,7 @@ export const TabBar: React.FC<TabBarProps> = ({ mode }) => {
     { to: '/', label: 'Katalog', icon: Coffee, end: true, badge: 0 },
     { to: '/keranjang', label: 'Keranjang', icon: ShoppingCart, end: false, badge: cartCount },
     { to: '/riwayat', label: 'Riwayat', icon: Receipt, end: false, badge: 0 },
+    { to: '/profil', label: 'Profil', icon: User, end: false, badge: 0 },
   ];
 
   const sellerTabs = [

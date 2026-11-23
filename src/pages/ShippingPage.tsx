@@ -21,9 +21,11 @@ import { useApp } from '../state/AppContext';
 
 export const ShippingPage: React.FC = () => {
   const navigate = useNavigate();
-  const { cart, produk, openPO, debugJarakOverride, setDebugJarakOverride, createOrder } = useApp();
+  const { cart, produk, openPO, currentUser, debugJarakOverride, setDebugJarakOverride, createOrder } = useApp();
 
-  const [alamat, setAlamat] = useState('Jl. Melati No. 12, Kec. Menteng');
+  const [alamat, setAlamat] = useState(
+    () => currentUser?.alamatDefault || 'Jl. Melati No. 12, Kec. Menteng'
+  );
   const [submitErr, setSubmitErr] = useState('');
 
   const enriched = cart

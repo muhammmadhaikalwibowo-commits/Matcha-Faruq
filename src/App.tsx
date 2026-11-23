@@ -15,6 +15,7 @@ import { HistoryPage } from './pages/HistoryPage';
 import { LoginPage } from './pages/LoginPage';
 import { PaymentPage } from './pages/PaymentPage';
 import { ProductDetailPage } from './pages/ProductDetailPage';
+import { ProfilePage } from './pages/ProfilePage';
 import { ProofAccessPage } from './pages/ProofAccessPage';
 import { RegisterPage } from './pages/RegisterPage';
 import { ShippingPage } from './pages/ShippingPage';
@@ -65,6 +66,7 @@ export default function App() {
             <Route path="/pengiriman" element={<ShippingPage />} />
             <Route path="/bayar/:id" element={<PaymentPage />} />
             <Route path="/riwayat" element={<HistoryPage />} />
+            <Route path="/profil" element={<ProfilePage />} />
             <Route path="/bukti/:id" element={<ProofAccessPage />} />
 
             {/* Seller (Admin) routes */}

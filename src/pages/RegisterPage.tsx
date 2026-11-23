@@ -3,6 +3,7 @@ import { Eye, EyeOff } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '../components/Button';
 import { Field, inputClassName } from '../components/Field';
+import { GoogleLogo, GoogleSignInModal } from '../components/GoogleSignInSheet';
 import { TopBar } from '../components/TopBar';
 import { MIN_PASSWORD_LENGTH, validasiEmail, validasiNoHp } from '../lib/rules';
 import { useApp } from '../state/AppContext';
@@ -16,6 +17,7 @@ export const RegisterPage: React.FC = () => {
   const [noHp, setNoHp] = useState('');
   const [password, setPassword] = useState('');
   const [showPass, setShowPass] = useState(false);
+  const [googleOpen, setGoogleOpen] = useState(false);
 
   const [errors, setErrors] = useState<{
     nama?: string;
@@ -61,7 +63,7 @@ export const RegisterPage: React.FC = () => {
   };
 
   return (
-    <div className="flex-1 min-h-0 flex flex-col">
+    <div className="flex-1 min-h-0 flex flex-col relative">
       <TopBar title="Daftar Akun" showBack backTo="/masuk" />
 
       <form
@@ -78,7 +80,7 @@ export const RegisterPage: React.FC = () => {
             <input
               id="reg-nama"
               type="text"
-              placeholder="Contoh: Dina Ayu"
+              placeholder="Contoh: Raihan Rifqi"
               value={nama}
               onChange={(e) => {
                 setNama(e.target.value);
@@ -149,9 +151,23 @@ export const RegisterPage: React.FC = () => {
 
         <div className="flex-1 min-h-4" />
 
-        <div className="pt-4 space-y-3">
+        <div className="pt-4 space-y-2.5">
           <Button type="submit">Daftar</Button>
-          <p className="text-center text-[13px] text-[#6B7866] dark:text-[#9FB098]">
+
+          <div className="flex items-center gap-3 py-0.5">
+            <span className="h-px flex-1 bg-[#DFE6D8] dark:bg-[#2E3829]" />
+            <span className="text-[11px] font-semibold text-[#6B7866] dark:text-[#9FB098]">
+              atau
+            </span>
+            <span className="h-px flex-1 bg-[#DFE6D8] dark:bg-[#2E3829]" />
+          </div>
+
+          <Button variant="outline" onClick={() => setGoogleOpen(true)}>
+            <GoogleLogo size={18} />
+            Daftar dengan Google
+          </Button>
+
+          <p className="text-center text-[13px] text-[#6B7866] dark:text-[#9FB098] pt-1">
             Sudah punya akun?{' '}
             <Link to="/masuk" className="text-[#4A7C3A] dark:text-[#9ED588] font-bold hover:underline">
               Masuk
@@ -159,6 +175,16 @@ export const RegisterPage: React.FC = () => {
           </p>
         </div>
       </form>
+
+      <GoogleSignInModal
+        open={googleOpen}
+        mode="register"
+        onClose={() => setGoogleOpen(false)}
+        onSuccess={(user) => {
+          setGoogleOpen(false);
+          navigate(user.peran === 'admin' ? '/admin' : '/');
+        }}
+      />
     </div>
   );
 };

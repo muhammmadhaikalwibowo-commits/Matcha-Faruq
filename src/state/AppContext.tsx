@@ -29,7 +29,7 @@ import type {
   UserRole,
 } from '../types';
 
-const STORAGE_KEY = 'matcha_open_po_state_v2';
+const STORAGE_KEY = 'matcha_open_po_state_v3';
 const THEME_STORAGE_KEY = 'matcha_theme_dark_v1';
 
 interface PersistedState {
@@ -55,7 +55,7 @@ function buildInitialState(): PersistedState {
     cart: [
       { produkId: 'prod-matcha-latte', jumlah: 2 },
     ],
-    currentUserId: 'user-dina',
+    currentUserId: 'user-raihan',
     loginLocks: { failedAttempts: {}, lockedUntil: {} },
     nextOrderSeq: 145,
     simulatedTimeOffsetMs: 0,
@@ -125,7 +125,17 @@ interface AppContextValue {
   toggleDarkMode: () => void;
   // Auth
   login: (email: string, password: string) => { ok: true; user: User } | ActionFailure;
+  loginWithGoogle: (input: {
+    nama: string;
+    email: string;
+    peran?: UserRole;
+  }) => { ok: true; user: User } | ActionFailure;
   register: (input: RegisterInput) => { ok: true; user: User } | ActionFailure;
+  updateProfile: (input: {
+    nama: string;
+    noHp: string;
+    alamatDefault?: string;
+  }) => { ok: true; user: User } | ActionFailure;
   logout: () => void;
   switchDemoRole: (role: UserRole) => void;
   resetPasswordMock: (email: string, newPassword: string) => { ok: true } | ActionFailure;
@@ -332,6 +342,89 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     return { ok: true, user: newUser };
   };
 
+  const loginWithGoogle = (input: {
+    nama: string;
+    email: string;
+    peran?: UserRole;
+  }): { ok: true; user: User } | ActionFailure => {
+    const email = input.email.trim().toLowerCase();
+    const nama = input.nama.trim();
+    if (!nama) {
+      return { ok: false, reason: 'Nama akun Google wajib diisi' };
+    }
+    if (!validasiEmail(email)) {
+      return { ok: false, reason: 'Format email Google belum benar' };
+    }
+
+    const existing = state.users.find((u) => u.email.toLowerCase() === email);
+    if (existing) {
+      const updatedUser: User = {
+        ...existing,
+        authProvider: 'google',
+      };
+      setState((prev) => ({
+        ...prev,
+        users: prev.users.map((u) => (u.id === existing.id ? updatedUser : u)),
+        currentUserId: existing.id,
+        loginLocks: {
+          failedAttempts: { ...prev.loginLocks.failedAttempts, [email]: 0 },
+          lockedUntil: { ...prev.loginLocks.lockedUntil, [email]: 0 },
+        },
+      }));
+      return { ok: true, user: updatedUser };
+    }
+
+    const newUser: User = {
+      id: `user-google-${Date.now()}`,
+      nama,
+      email,
+      noHp: '081200000000',
+      passwordHash: mockHashPassword(`google_oauth_${Date.now()}`),
+      peran: input.peran ?? 'pembeli',
+      authProvider: 'google',
+      alamatDefault: 'Jl. Melati No. 12, Kec. Menteng',
+    };
+
+    setState((prev) => ({
+      ...prev,
+      users: [...prev.users, newUser],
+      currentUserId: newUser.id,
+    }));
+    return { ok: true, user: newUser };
+  };
+
+  const updateProfile = (input: {
+    nama: string;
+    noHp: string;
+    alamatDefault?: string;
+  }): { ok: true; user: User } | ActionFailure => {
+    if (!currentUser) {
+      return { ok: false, reason: 'Silakan masuk terlebih dahulu' };
+    }
+    if (!input.nama.trim()) {
+      return { ok: false, reason: 'Nama lengkap wajib diisi' };
+    }
+    if (!validasiNoHp(input.noHp)) {
+      return { ok: false, reason: 'Nomor HP minimal 10 digit angka' };
+    }
+
+    const updatedUser: User = {
+      ...currentUser,
+      nama: input.nama.trim(),
+      noHp: input.noHp.trim(),
+      alamatDefault:
+        input.alamatDefault !== undefined
+          ? input.alamatDefault.trim()
+          : currentUser.alamatDefault,
+    };
+
+    setState((prev) => ({
+      ...prev,
+      users: prev.users.map((u) => (u.id === currentUser.id ? updatedUser : u)),
+    }));
+    return { ok: true, user: updatedUser };
+  };
+
   const logout = () => {
     setState((prev) => ({ ...prev, currentUserId: null }));
   };
@@ -341,7 +434,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       const target =
         role === 'admin'
           ? prev.users.find((u) => u.peran === 'admin')
-          : prev.users.find((u) => u.email === 'dina.ayu@mail.com') ??
+          : prev.users.find((u) => u.email === 'raihan.rifqi@gmail.com') ??
             prev.users.find((u) => u.peran === 'pembeli');
       return {
         ...prev,
@@ -936,7 +1029,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         darkMode,
         toggleDarkMode,
         login,
+        loginWithGoogle,
         register,
+        updateProfile,
         logout,
         switchDemoRole,
         resetPasswordMock,

@@ -44,34 +44,26 @@ export function createSeedState(now = Date.now()): SeedState {
 
   const users: User[] = [
     {
-      id: 'user-dina',
-      nama: 'Dina Ayu',
-      email: 'dina.ayu@mail.com',
+      id: 'user-raihan',
+      nama: 'Raihan Rifqi',
+      email: 'raihan.rifqi@gmail.com',
       noHp: '081234567890',
       passwordHash: defaultHash,
       peran: 'pembeli',
     },
     {
-      id: 'user-raka',
-      nama: 'Raka Pratama',
-      email: 'raka.p@mail.com',
+      id: 'user-haikal',
+      nama: 'Haikal Wibowo',
+      email: 'haikal.wibowo@gmail.com',
       noHp: '081298765432',
       passwordHash: defaultHash,
       peran: 'pembeli',
     },
     {
-      id: 'user-salsa',
-      nama: 'Salsa Maharani',
-      email: 'salsa.m@mail.com',
+      id: 'user-ashfa',
+      nama: 'Ashfa Abimanyu',
+      email: 'ashfa.abimanyu@gmail.com',
       noHp: '081345678901',
-      passwordHash: defaultHash,
-      peran: 'pembeli',
-    },
-    {
-      id: 'user-bima',
-      nama: 'Bima Wijaya',
-      email: 'bima.w@mail.com',
-      noHp: '081456789012',
       passwordHash: defaultHash,
       peran: 'pembeli',
     },
@@ -148,7 +140,7 @@ export function createSeedState(now = Date.now()): SeedState {
   const pesanan: Pesanan[] = [
     {
       id: 'MT-0144',
-      userId: 'user-raka',
+      userId: 'user-haikal',
       openPoId: openPO.id,
       waktuPesan: tToday - 45 * min,
       totalBayar: 61000,
@@ -156,7 +148,7 @@ export function createSeedState(now = Date.now()): SeedState {
     },
     {
       id: 'MT-0143',
-      userId: 'user-dina',
+      userId: 'user-raihan',
       openPoId: openPO.id,
       waktuPesan: tToday - 1.5 * h,
       totalBayar: 115000,
@@ -164,7 +156,7 @@ export function createSeedState(now = Date.now()): SeedState {
     },
     {
       id: 'MT-0142',
-      userId: 'user-dina',
+      userId: 'user-raihan',
       openPoId: openPO.id,
       waktuPesan: tToday - 3 * h,
       totalBayar: 115000,
@@ -172,7 +164,7 @@ export function createSeedState(now = Date.now()): SeedState {
     },
     {
       id: 'MT-0141',
-      userId: 'user-raka',
+      userId: 'user-haikal',
       openPoId: openPO.id,
       waktuPesan: tToday - 4 * h,
       totalBayar: 61000,
@@ -180,7 +172,7 @@ export function createSeedState(now = Date.now()): SeedState {
     },
     {
       id: 'MT-0140',
-      userId: 'user-salsa',
+      userId: 'user-ashfa',
       openPoId: openPO.id,
       waktuPesan: tToday - 5 * h,
       totalBayar: 142000,
@@ -188,7 +180,7 @@ export function createSeedState(now = Date.now()): SeedState {
     },
     {
       id: 'MT-0139',
-      userId: 'user-dina',
+      userId: 'user-raihan',
       openPoId: openPO.id,
       waktuPesan: tToday - 19 * min, // 23 jam 41 menit tersisa
       totalBayar: 33000,
@@ -196,7 +188,7 @@ export function createSeedState(now = Date.now()): SeedState {
     },
     {
       id: 'MT-0138',
-      userId: 'user-bima',
+      userId: 'user-ashfa',
       openPoId: openPO.id,
       waktuPesan: tToday - 26 * h,
       totalBayar: 33000,
@@ -204,7 +196,7 @@ export function createSeedState(now = Date.now()): SeedState {
     },
     {
       id: 'MT-0131',
-      userId: 'user-dina',
+      userId: 'user-raihan',
       openPoId: openPO.id,
       waktuPesan: tToday - 28 * h,
       totalBayar: 60000,
@@ -337,7 +329,7 @@ export function createSeedState(now = Date.now()): SeedState {
     {
       pesananId: 'MT-0143',
       metodeBayar: 'qris',
-      buktiUrl: createMockReceiptSvg('MT-0143', 'Rp115.000', 'Dina A.', 'QRIS Dinamis · Otomatis'),
+      buktiUrl: createMockReceiptSvg('MT-0143', 'Rp115.000', 'Raihan R.', 'QRIS Dinamis · Otomatis'),
       buktiNamaFile: 'qris-dinamis-mt0143',
       nominal: 115000,
       statusBayar: 'lunas',
@@ -349,7 +341,7 @@ export function createSeedState(now = Date.now()): SeedState {
     {
       pesananId: 'MT-0142',
       metodeBayar: 'qris',
-      buktiUrl: createMockReceiptSvg('MT-0142', 'Rp115.000', 'Dina A.', 'QRIS Dinamis · Otomatis'),
+      buktiUrl: createMockReceiptSvg('MT-0142', 'Rp115.000', 'Raihan R.', 'QRIS Dinamis · Otomatis'),
       buktiNamaFile: 'qris-dinamis-mt0142',
       nominal: 115000,
       statusBayar: 'lunas',
@@ -361,7 +353,7 @@ export function createSeedState(now = Date.now()): SeedState {
     {
       pesananId: 'MT-0141',
       metodeBayar: 'qris',
-      buktiUrl: createMockReceiptSvg('MT-0141', 'Rp61.000', 'Raka P.', 'QRIS Dinamis · Otomatis'),
+      buktiUrl: createMockReceiptSvg('MT-0141', 'Rp61.000', 'Haikal W.', 'QRIS Dinamis · Otomatis'),
       buktiNamaFile: 'qris-dinamis-mt0141',
       nominal: 61000,
       statusBayar: 'lunas',
@@ -373,7 +365,7 @@ export function createSeedState(now = Date.now()): SeedState {
     {
       pesananId: 'MT-0140',
       metodeBayar: 'qris',
-      buktiUrl: createMockReceiptSvg('MT-0140', 'Rp142.000', 'Salsa M.', 'QRIS Dinamis · Otomatis'),
+      buktiUrl: createMockReceiptSvg('MT-0140', 'Rp142.000', 'Ashfa A.', 'QRIS Dinamis · Otomatis'),
       buktiNamaFile: 'qris-dinamis-mt0140',
       nominal: 142000,
       statusBayar: 'lunas',
@@ -396,7 +388,7 @@ export function createSeedState(now = Date.now()): SeedState {
     {
       pesananId: 'MT-0138',
       metodeBayar: 'qris',
-      buktiUrl: createMockReceiptSvg('MT-0138', 'Rp33.000', 'Bima W.', 'QRIS Dinamis · Otomatis'),
+      buktiUrl: createMockReceiptSvg('MT-0138', 'Rp33.000', 'Ashfa A.', 'QRIS Dinamis · Otomatis'),
       buktiNamaFile: 'qris-dinamis-mt0138',
       nominal: 33000,
       statusBayar: 'lunas',
@@ -496,7 +488,7 @@ export function createSeedState(now = Date.now()): SeedState {
   const notifications: AppNotification[] = [
     {
       id: 'notif-1',
-      userId: 'user-dina',
+      userId: 'user-raihan',
       pesananId: 'MT-0142',
       pesan: 'Pesanan #MT-0142 sedang dikirim dengan no. resi JNE123456789.',
       waktu: tToday - 2 * h,
@@ -504,7 +496,7 @@ export function createSeedState(now = Date.now()): SeedState {
     },
     {
       id: 'notif-2',
-      userId: 'user-dina',
+      userId: 'user-raihan',
       pesananId: 'MT-0131',
       pesan: 'Pesanan #MT-0131 kedaluwarsa karena melewati batas waktu pembayaran 24 jam.',
       waktu: tToday - 12 * h,

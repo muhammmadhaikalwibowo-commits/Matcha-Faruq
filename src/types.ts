@@ -7,6 +7,8 @@ export interface User {
   noHp: string;
   passwordHash: string;
   peran: UserRole;
+  authProvider?: 'email' | 'google';
+  alamatDefault?: string;
 }
 
 export interface Produk {
