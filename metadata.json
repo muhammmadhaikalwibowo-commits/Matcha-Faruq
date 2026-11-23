@@ -1,0 +1,6 @@
+{
+  "name": "MATCHA — Open PO Matcha",
+  "description": "Aplikasi pemesanan dan pengiriman matcha untuk toko open PO dengan pembayaran QRIS statis dan verifikasi admin.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
